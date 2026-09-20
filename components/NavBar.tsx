@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import posthog from "posthog-js";
 
+/** Renders the primary navigation and tracks link selections in PostHog. */
 const NavBar = () => {
   const handleNavClick = (label: string) => {
     posthog.capture("nav_link_clicked", { link_label: label });
@@ -12,7 +13,13 @@ const NavBar = () => {
     <header>
       <nav>
         <Link href="/" className="logo" onClick={() => handleNavClick("Logo")}>
-          <Image src="/icons/logo.png" alt="Logo" width={24} height={24} />
+          <Image
+            src="/icons/logo.png"
+            alt="Logo"
+            width={24}
+            height={24}
+            className="w-auto h-auto"
+          />
           Dev Events
         </Link>
         <ul>

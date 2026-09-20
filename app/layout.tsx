@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk, Martian_Mono, Geist } from "next/font/google";
+import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import LightRays from "@/components/LightRays";
 import NavBar from "@/components/NavBar";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
