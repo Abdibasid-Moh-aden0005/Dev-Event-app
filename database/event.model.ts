@@ -182,9 +182,6 @@ EventSchema.pre("save", function (this: EventDocument) {
   }
 });
 
-// Create unique index on slug for better performance
-EventSchema.index({ slug: 1 }, { unique: true });
-
 // Create compound index for common queries
 EventSchema.index({ date: 1, mode: 1 });
 

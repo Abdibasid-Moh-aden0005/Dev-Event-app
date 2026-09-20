@@ -25,7 +25,7 @@ declare global {
  * Global cache object to reuse MongoDB connections across invocations
  * in a serverless/hot-reloading Next.js environment.
  */
-let cached: MongooseCache = global.mongoose ?? { conn: null, promise: null };
+const cached: MongooseCache = global.mongoose ?? { conn: null, promise: null };
 
 if (!global.mongoose) {
   global.mongoose = cached;
@@ -40,7 +40,7 @@ if (!global.mongoose) {
 export async function connectToDatabase(): Promise<Mongoose> {
   if (!MONGODB_URI) {
     throw new Error(
-      "Please define the MONGODB_URI environment variable inside .env.local"
+      "Please define the MONGODB_URI environment variable inside .env.local",
     );
   }
 
@@ -53,11 +53,15 @@ export async function connectToDatabase(): Promise<Mongoose> {
   if (!cached.promise) {
     const opts: ConnectOptions = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      return mongooseInstance;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, opts)
+      .then((mongooseInstance) => {
+        console.log("Connected to MongoDB successfully");
+        return mongooseInstance;
+      });
   }
 
   try {
@@ -66,6 +70,7 @@ export async function connectToDatabase(): Promise<Mongoose> {
   } catch (error) {
     // Reset cached promise on failure so subsequent attempts can retry
     cached.promise = null;
+    console.error("MongoDB connection error:", error);
     throw error;
   }
 

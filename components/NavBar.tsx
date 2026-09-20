@@ -12,7 +12,13 @@ const NavBar = () => {
     <header>
       <nav>
         <Link href="/" className="logo" onClick={() => handleNavClick("Logo")}>
-          <Image src="/icons/logo.png" alt="Logo" width={24} height={24} />
+          <Image
+            src="/icons/logo.png"
+            alt="Logo"
+            width={24}
+            height={24}
+            className="w-auto h-auto"
+          />
           Dev Events
         </Link>
         <ul>

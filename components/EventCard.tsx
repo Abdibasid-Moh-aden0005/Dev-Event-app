@@ -1,19 +1,13 @@
 "use client";
 
+import { IEvent } from "@/database";
 import Image from "next/image";
 import Link from "next/link";
 import posthog from "posthog-js";
 
-interface Prop {
-  title: string;
-  image: string;
-  slug: string;
-  location: string;
-  date: string;
-  time: string;
-}
 
-const EventCard = ({ title, image, slug, location, date, time }: Prop) => {
+
+const EventCard = ({ title, image, slug, location, date, time }: IEvent) => {
   const handleClick = () => {
     posthog.capture("event_card_clicked", {
       event_slug: slug,
@@ -30,11 +24,17 @@ const EventCard = ({ title, image, slug, location, date, time }: Prop) => {
         alt={title}
         width={410}
         height={300}
-        className="poster"
+        className="poster w-auto h-auto"
       />
 
       <div className="flex flex-row gap-2">
-        <Image src="/icons/pin.svg" alt="location" width={14} height={14} />
+        <Image
+          src="/icons/pin.svg"
+          alt="location"
+          width={14}
+          height={14}
+          className="w-auto h-auto"
+        />
         <p>{location}</p>
       </div>
 
@@ -42,11 +42,23 @@ const EventCard = ({ title, image, slug, location, date, time }: Prop) => {
 
       <div className="datetime">
         <div>
-          <Image src="/icons/calendar.svg" alt="date" width={14} height={14} />
+          <Image
+            src="/icons/calendar.svg"
+            alt="date"
+            width={14}
+            height={14}
+            className="w-auto h-auto"
+          />
           <p>{date}</p>
         </div>
         <div>
-          <Image src="/icons/clock.svg" alt="time" width={14} height={14} />
+          <Image
+            src="/icons/clock.svg"
+            alt="time"
+            width={14}
+            height={14}
+            className="w-auto h-auto"
+          />
           <p>{time}</p>
         </div>
       </div>
