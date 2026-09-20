@@ -3,7 +3,15 @@ import { v2 as cloudinary } from "cloudinary";
 import { Event } from "@/database";
 import connectToDatabase from "@/lib/mongodb";
 
-// Post method : Create a new event
+/**
+ * Creates an event from multipart form data and uploads its required image.
+ *
+ * The `tags` and `agenda` fields are parsed as JSON before the event is saved.
+ *
+ * @param req The request containing the event fields and image.
+ * @returns A JSON response containing the created event or a validation,
+ * upload, parsing, or database error.
+ */
 export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
@@ -69,8 +77,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET method : Get all events
-
+/**
+ * Retrieves all events in reverse creation order.
+ *
+ * @returns A successful JSON response with an event array, including an empty
+ * array when no events exist, or an error response when retrieval fails.
+ */
 export async function GET() {
   try {
     await connectToDatabase();

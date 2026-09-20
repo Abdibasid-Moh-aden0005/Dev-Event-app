@@ -4,6 +4,12 @@ import { IEvent } from "@/database";
 import { notFound } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+/**
+ * Renders featured events returned by the events API.
+ *
+ * If the request cannot be completed, the page renders with an empty list.
+ */
 const page = async () => {
   let events: IEvent[] = [];
   try {

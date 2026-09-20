@@ -71,6 +71,11 @@ const getAnchorAndDir = (
   }
 };
 
+/**
+ * Renders configurable WebGL light rays while the component is visible.
+ *
+ * The animation responds to resizing and can optionally follow pointer movement.
+ */
 const LightRays: React.FC<LightRaysProps> = ({
   raysOrigin = "top-center",
   raysColor = DEFAULT_COLOR,

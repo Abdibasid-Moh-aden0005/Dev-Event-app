@@ -112,7 +112,10 @@ const EventSchema = new Schema<IEvent>(
   },
 );
 
-// Helper function to generate URL-friendly slug
+/**
+ * Converts a title to a lowercase ASCII slug, removing unsupported characters
+ * and collapsing whitespace and repeated hyphens.
+ */
 function generateSlug(title: string): string {
   return title
     .toLowerCase()
@@ -123,7 +126,11 @@ function generateSlug(title: string): string {
     .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
 }
 
-// Helper function to normalize date to ISO format
+/**
+ * Parses a date and returns the date portion of its UTC ISO representation.
+ *
+ * @throws An error when the input cannot be parsed as a date.
+ */
 function normalizeDate(dateString: string): string {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {
@@ -132,7 +139,12 @@ function normalizeDate(dateString: string): string {
   return date.toISOString().split("T")[0]; // Return YYYY-MM-DD format
 }
 
-// Helper function to normalize time format
+/**
+ * Normalizes a matching time value to zero-padded 24-hour `HH:mm` format.
+ *
+ * @throws An error when the input format does not match or its values are out
+ * of range.
+ */
 function normalizeTime(timeString: string): string {
   // Handle various time formats and convert to HH:MM (24-hour format)
   const timeRegex = /^(\d{1,2}):(\d{2})(\s*(AM|PM))?$/i;
@@ -164,7 +176,10 @@ function normalizeTime(timeString: string): string {
   return `${hours.toString().padStart(2, "0")}:${minutes}`;
 }
 
-// Pre-save hook for slug generation and data normalization
+/**
+ * Generates the slug and normalizes date and time fields before saving a new
+ * event or one whose corresponding source fields changed.
+ */
 EventSchema.pre("save", function (this: EventDocument) {
   // Generate slug only if title changed or document is new
   if (this.isModified("title") || this.isNew) {

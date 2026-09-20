@@ -24,6 +24,7 @@ const BookingSchema = new Schema<IBooking>(
       trim: true,
       lowercase: true,
       validate: {
+        /** Checks whether Mongoose should accept the email's address syntax. */
         validator: function (email: string) {
           // RFC 5322 compliant email validation regex
           const emailRegex =
@@ -39,7 +40,12 @@ const BookingSchema = new Schema<IBooking>(
   },
 );
 
-// Pre-save hook to validate event exists before creating booking
+/**
+ * Verifies that a new or changed event reference exists before saving.
+ *
+ * @throws An error named `ValidationError` when the event is missing or the
+ * lookup cannot be completed.
+ */
 BookingSchema.pre("save", async function (this: BookingDocument) {
   // Only validate eventId if it's new or modified
   if (this.isModified("eventId") || this.isNew) {

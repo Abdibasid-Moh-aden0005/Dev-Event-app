@@ -27,6 +27,12 @@ const EventDetailItem = ({
   </div>
 );
 
+/**
+ * Normalizes list data that may be an array or a JSON-encoded value.
+ *
+ * Malformed JSON is preserved as the original string or array rather than
+ * causing the event page to fail.
+ */
 const parseList = (items: string[] | string | undefined): string[] => {
   if (!items) return [];
   if (Array.isArray(items)) {
@@ -55,6 +61,7 @@ const parseList = (items: string[] | string | undefined): string[] => {
   return [];
 };
 
+/** Renders agenda items, including arrays stored as a JSON-encoded string. */
 const EventAgenda = ({ agendaItems }: { agendaItems: string[] }) => {
   const parsedAgenda = parseList(agendaItems);
   return (
@@ -69,6 +76,7 @@ const EventAgenda = ({ agendaItems }: { agendaItems: string[] }) => {
   );
 };
 
+/** Renders event tags, including arrays stored as a JSON-encoded string. */
 const EventTags = ({ tags }: { tags: string[] }) => {
   const parsedTags = parseList(tags);
   return (
@@ -82,6 +90,12 @@ const EventTags = ({ tags }: { tags: string[] }) => {
   );
 };
 
+/**
+ * Renders the event identified by the route slug together with similar events.
+ *
+ * A missing event or description and unsuccessful requests render the
+ * not-found page.
+ */
 const EventDetails = async ({
   params,
 }: {

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import posthog from "posthog-js";
 
+/** Renders the primary navigation and tracks link selections in PostHog. */
 const NavBar = () => {
   const handleNavClick = (label: string) => {
     posthog.capture("nav_link_clicked", { link_label: label });

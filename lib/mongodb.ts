@@ -36,6 +36,7 @@ if (!global.mongoose) {
  * to prevent multiple redundant connections during development and serverless execution.
  *
  * @returns {Promise<Mongoose>} Active Mongoose instance.
+ * @throws {Error} When `MONGODB_URI` is missing or the connection attempt fails.
  */
 export async function connectToDatabase(): Promise<Mongoose> {
   if (!MONGODB_URI) {

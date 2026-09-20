@@ -11,8 +11,10 @@ type RouteParams = {
 };
 
 /**
- * GET /api/events/[slug]
- * Fetches a single events by its slug
+ * Retrieves the event whose normalized slug matches the dynamic route segment.
+ *
+ * @returns A JSON response containing the event, or an error response for an
+ * invalid slug, a missing event, or a database failure.
  */
 export async function GET(
   req: NextRequest,

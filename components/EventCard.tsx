@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import posthog from "posthog-js";
 
-
-
+/**
+ * Renders a link to an event's detail page and tracks clicks in PostHog.
+ */
 const EventCard = ({ title, image, slug, location, date, time }: IEvent) => {
   const handleClick = () => {
     posthog.capture("event_card_clicked", {
